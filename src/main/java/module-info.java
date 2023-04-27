@@ -3,6 +3,8 @@ module com.example.librarysoftwarefx {
     requires javafx.fxml;
 
 
-    opens com.example.librarysoftwarefx to javafx.fxml;
-    exports com.example.librarysoftwarefx;
+    opens com.aiden.librarysoftwarefx to javafx.fxml;
+
+    exports com.aiden.librarysoftwarefx.misc;
+    opens com.aiden.librarysoftwarefx.misc to javafx.fxml;
 }

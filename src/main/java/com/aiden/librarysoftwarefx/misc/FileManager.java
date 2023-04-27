@@ -1,17 +1,15 @@
-package com.example.librarysoftwarefx;
+package com.aiden.librarysoftwarefx.misc;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-public class SaveFile {
+public class FileManager {
     private String filePath;
 
-    public SaveFile(String path) {
-        this.filePath = path;
-    }
-    public boolean exists() { return new File(this.filePath).exists(); }
+    public FileManager(String path) { this.filePath = path; }
+    public boolean fileExists() { return new File(this.filePath).exists(); }
 
     public void generateFile() throws URISyntaxException, IOException {
         // We need to ensure that the save file will be generated in the same
