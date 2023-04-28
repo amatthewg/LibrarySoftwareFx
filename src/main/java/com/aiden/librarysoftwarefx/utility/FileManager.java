@@ -1,4 +1,4 @@
-package com.aiden.librarysoftwarefx.misc;
+package com.aiden.librarysoftwarefx.utility;
 
 import java.io.File;
 import java.io.IOException;

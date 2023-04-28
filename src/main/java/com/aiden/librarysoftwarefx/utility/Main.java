@@ -1,4 +1,4 @@
-package com.aiden.librarysoftwarefx.misc;
+package com.aiden.librarysoftwarefx.utility;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
