@@ -23,8 +23,10 @@ public class Main extends Application {
         if(!bookDataFileManager.fileExists()) {
             bookDataFileManager.generateFile();
         }
+        // TODO manually check if save files exist, create otherwise
         launch(args);
 
+        // TODO ***ensure that special characters are rejected in the new user creation form***
 
     }
 }
