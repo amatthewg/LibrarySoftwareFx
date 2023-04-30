@@ -30,7 +30,7 @@ public class User  {
     }
 
     public User(String csvInput) {
-        String nonCharges = csvInput.substring(0, csvInput.indexOf("("));
+        String nonCharges = csvInput.substring(0, csvInput.indexOf(",("));
         String[] fields = nonCharges.split(",");
         this.userID = Integer.parseInt(fields[0]);
         this.firstName = fields[1];
@@ -41,7 +41,10 @@ public class User  {
         this.email = fields[6];
         this.phoneNumber = fields[7];
 
-        String charges = csvInput.substring(csvInput.indexOf("("));
+        String[] chargeCsvs = csvInput.substring(
+                csvInput.indexOf(",(") + 1, csvInput.length() - 1)
+                .split(",");
+        for(String charge : chargeCsvs) this.listOfAllCharges.add(new LibraryCharge(charge));
 
     }
     public void setMiddleName(String input) { this.middleName = input; }
