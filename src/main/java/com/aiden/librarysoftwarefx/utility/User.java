@@ -56,6 +56,7 @@ public class User  {
     public void setEmail(String email) { this.email = email; }
     public String getEmail() { return this.email; }
     public void setPhoneNumber(String number) { this.phoneNumber = number; }
+    public static int getUserIDCount() { return userIDCount; }
 
     public List<LibraryCharge> getListOfPastCharges() {
         return this.listOfAllCharges.stream()

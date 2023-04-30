@@ -25,5 +25,6 @@ public class FileManager {
         // Create the file
         File saveFile = new File(jarDirectory + File.separator + this.filePath);
         saveFile.createNewFile();
+        String x = "";
     }
 }
