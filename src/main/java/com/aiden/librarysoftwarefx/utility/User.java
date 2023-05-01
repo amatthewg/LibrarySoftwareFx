@@ -40,6 +40,7 @@ public class User  {
         this.balanceDue = Double.parseDouble(fields[5]);
         this.email = fields[6];
         this.phoneNumber = fields[7];
+        this.listOfAllCharges = new ArrayList<>();
 
         String[] chargeCsvs = csvInput.substring(
                 csvInput.indexOf(",(") + 1, csvInput.length() - 1)

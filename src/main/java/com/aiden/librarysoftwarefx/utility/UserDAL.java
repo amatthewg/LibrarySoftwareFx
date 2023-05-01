@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +19,20 @@ public class UserDAL { // Data access layer for User objects
 
         try(BufferedReader br = new BufferedReader(new FileReader(Main.USERS_FILE_NAME))) {
             String line;
-            while((line = br.readLine()) != null) result.add(new User(line));
+            while((line = br.readLine()) != null && !line.trim().isEmpty()) result.add(new User(line));
         } catch(Exception e) {
             error();
         }
         return result;
+    }
+    public static void saveNewUser(User user) {
+        List<User> users = getAllUsers();
+        users.add(user);
+        try(FileWriter writer = new FileWriter(Main.USERS_FILE_NAME, false)){
+            for(User u : users) writer.write(u.toCsv() + "\n");
+        } catch(Exception e) {
+            error();
+        }
     }
     private static void error() {
         Alert fileAlert = new Alert(AlertType.ERROR);
