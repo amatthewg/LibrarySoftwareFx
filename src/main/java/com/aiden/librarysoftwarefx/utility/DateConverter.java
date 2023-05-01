@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateConverter {
+    // TODO convert this class to a DateManager for handling strings/dates/comparing, etc
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String dateToString(Date date) {

@@ -7,12 +7,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserDAL { // Data access layer for User objects
-    private static File saveFile;
-
 
     public static List<User> getAllUsers() {
         List<User> result = new ArrayList<>();
@@ -34,6 +34,49 @@ public class UserDAL { // Data access layer for User objects
             error();
         }
     }
+    public static void saveAllUsers(List<User> userList) {
+        try(FileWriter writer = new FileWriter(Main.USERS_FILE_NAME, false)){
+            for(User user : userList) writer.write(user.toCsv() + "\n");
+        } catch(Exception e) {
+            error();
+        }
+    }
+    public static User getUserByID(int id) {
+        for(User user : getAllUsers()) {
+            if(user.getUserID() == id) return user;
+        }
+        return null;
+    }
+    public static List<User> getUsersByName(String search) {
+        search = search.toLowerCase();
+        List<User> result = new ArrayList<>();
+        for(User user : getAllUsers()) {
+            if(user.getFirstName().toLowerCase().contains(search) ||
+            user.getMiddleName().toLowerCase().contains(search) ||
+            user.getLastName().toLowerCase().contains(search)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+    public static List<User> getUsersByRegistrationDate(Date date1, Date date2) throws ParseException {
+        List<User> result = new ArrayList<>();
+        for(User user : getAllUsers()) {
+            Date userDate = DateConverter.stringToDate(user.getRegistrationDate());
+            if(userDate.compareTo(date1) >= 0 &&
+            userDate.compareTo(date2) <= 0) {
+                result.add(user);
+            }
+        }
+
+        return result;
+    }
+    public static boolean deleteUser(User user) {
+        List<User> allUsers = getAllUsers();
+        boolean bool = allUsers.remove(user);
+        saveAllUsers(allUsers);
+        return bool;
+    }
     private static void error() {
         Alert fileAlert = new Alert(AlertType.ERROR);
         fileAlert.setTitle("Fatal error");
@@ -42,4 +85,5 @@ public class UserDAL { // Data access layer for User objects
         fileAlert.showAndWait();
         System.exit(0);
     }
+
 }

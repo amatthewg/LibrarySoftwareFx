@@ -48,8 +48,13 @@ public class User  {
         for(String charge : chargeCsvs) this.listOfAllCharges.add(new LibraryCharge(charge));
 
     }
+    public void setFirstName(String name) { this.firstName = name; }
+    public String getFirstName() { return this.firstName; }
+
     public void setMiddleName(String input) { this.middleName = input; }
     public String getMiddleName() { return this.middleName; }
+    public void setLastName(String name) { this.lastName = name; }
+    public String getLastName() { return this.lastName; }
     public int getUserID() { return this.userID; }
     public String getRegistrationDate() { return this.registrationDate; }
     public double getBalanceDue() { return this.balanceDue; }
@@ -88,6 +93,8 @@ public class User  {
         for(LibraryCharge charge : this.listOfAllCharges) { result.add("(" + charge.toCsv() + ")"); }
         return String.join(",", result.toArray(new String[0]));
     }
+
+
 
 
 
