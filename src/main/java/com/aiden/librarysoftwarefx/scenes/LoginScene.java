@@ -36,16 +36,12 @@ public class LoginScene {
         createAccountLink.setOnAction(e -> {
             // TODO implement logic
         });
-        Hyperlink forgotPassLink = new Hyperlink("Forgot password");
-        forgotPassLink.setOnAction(e -> {
-            // TODO implement logic
-        });
         Label errorLabel = new Label();
         errorLabel.setTextFill(Color.RED);
 
         vbox.getChildren().addAll(titleLabel, usernameLabel, usernameField,
                 passwordLabel, passwordField, loginButton, createAccountLink,
-                forgotPassLink, errorLabel);
+                errorLabel);
 
         vbox.setPadding(new Insets(20, 20, 20, 20));
 
