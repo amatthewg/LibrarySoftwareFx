@@ -62,7 +62,7 @@ public class UserDAL { // Data access layer for User objects
     public static List<User> getUsersByRegistrationDate(Date date1, Date date2) throws ParseException {
         List<User> result = new ArrayList<>();
         for(User user : getAllUsers()) {
-            Date userDate = DateConverter.stringToDate(user.getRegistrationDate());
+            Date userDate = DateManager.stringToDate(user.getRegistrationDate());
             if(userDate.compareTo(date1) >= 0 &&
             userDate.compareTo(date2) <= 0) {
                 result.add(user);

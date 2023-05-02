@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,8 +62,11 @@ public class BookDAL { // Data access layer for Book objects
         }
         return result;
     }
-    public static List<Book> getBooksByRegistrationDate(Date date1, Date date2) {
-        // TODO implement DateManager for this purpose
+    public static List<Book> getBooksByPublishDate(Date date1, Date date2) throws ParseException {
+        List<Book> result = new ArrayList<>();
+        for(Book b : getAllBooks()) {
+            if(DateManager.comesOnOrAfter(b.getPublishDate(), DateManager.dateToString(date1)));
+        }
         return null;
     }
     public static boolean deleteBook(Book book) {

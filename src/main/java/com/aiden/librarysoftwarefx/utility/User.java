@@ -24,7 +24,7 @@ public class User  {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userIDCount++;
-        this.registrationDate = DateConverter.dateToString(new Date());
+        this.registrationDate = DateManager.dateToString(new Date());
         this.balanceDue = 0;
         this.listOfAllCharges = new ArrayList<>();
     }

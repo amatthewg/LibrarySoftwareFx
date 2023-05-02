@@ -15,7 +15,7 @@ public class LibraryCharge {
         this.amount = amount;
         this.userID = userID;
         this.chargeReason = reason;
-        this.dateIncurred = DateConverter.dateToString(new Date());
+        this.dateIncurred = DateManager.dateToString(new Date());
         this.paid = false;
     }
     public LibraryCharge(String csvInput) {
