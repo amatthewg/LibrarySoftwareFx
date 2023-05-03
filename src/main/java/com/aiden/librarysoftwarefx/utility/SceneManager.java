@@ -17,14 +17,15 @@ public class SceneManager {
         stage = inputStage;
     }
 
-    public void addScene(String name, Scene scene) {
+    public static void addScene(String name, Scene scene) {
         scenes.put(name, scene);
     }
-    public void switchToScene(String name) {
+    public static void switchToScene(String name) {
         if(!scenes.containsKey(name)) {
             throw new IllegalArgumentException("Scene " + name + " not located.");
         }
         stage.setScene(scenes.get(name));
         stage.show();
     }
+    public static void showStage() { stage.show(); }
 }

@@ -1,5 +1,6 @@
 package com.aiden.librarysoftwarefx.utility;
 
+import com.aiden.librarysoftwarefx.scenes.LoginScene;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -63,6 +64,9 @@ public class Main extends Application {
                 System.exit(0);
             }
         }
+        // Ready to rock and roll. Get all our scene objects, and
+        // add them to our SceneManager
+        SceneManager.addScene("login_page", LoginScene.getScene());
     }
 
     public static void main(String[] args)  {
