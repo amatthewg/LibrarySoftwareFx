@@ -1,4 +1,4 @@
-package com.aiden.librarysoftwarefx.utility;
+package com.aiden.librarysoftwarefx.managers;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -27,5 +27,5 @@ public class SceneManager {
         stage.setScene(scenes.get(name));
         stage.show();
     }
-    public static void showStage() { stage.show(); }
+
 }

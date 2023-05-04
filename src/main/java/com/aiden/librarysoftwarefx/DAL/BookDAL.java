@@ -1,9 +1,11 @@
-package com.aiden.librarysoftwarefx.utility;
+package com.aiden.librarysoftwarefx.DAL;
 
+import com.aiden.librarysoftwarefx.managers.DateManager;
+import com.aiden.librarysoftwarefx.managers.FileManager;
+import com.aiden.librarysoftwarefx.utility.Book;
 import javafx.scene.control.Alert;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
@@ -16,7 +18,7 @@ public class BookDAL { // Data access layer for Book objects
     public static List<Book> getAllBooks() {
         List<Book> result = new ArrayList<>();
 
-        try(BufferedReader br = new BufferedReader(new FileReader(Main.BOOK_FILE_NAME))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(FileManager.getBookFile().getPath()))) {
             String line;
             while((line = br.readLine()) != null && !line.trim().isEmpty()) result.add(new Book(line));
         } catch(Exception e) {
@@ -27,14 +29,14 @@ public class BookDAL { // Data access layer for Book objects
     public static void saveNewBook(Book book) {
         List<Book> books = getAllBooks();
         books.add(book);
-        try(FileWriter writer = new FileWriter(Main.BOOK_FILE_NAME, false)) {
+        try(FileWriter writer = new FileWriter(FileManager.getBookFile().getPath(), false)) {
             for(Book b : books) writer.write(b.toCsv() + "\n");
         } catch(Exception e) {
             error();
         }
     }
     public static void saveAllBooks(List<Book> bookList) {
-        try(FileWriter writer = new FileWriter(Main.BOOK_FILE_NAME, false)) {
+        try(FileWriter writer = new FileWriter(FileManager.getBookFile().getPath(), false)) {
             for(Book b : bookList) writer.write(b.toCsv() + "\n");
         } catch(Exception e) {
             error();

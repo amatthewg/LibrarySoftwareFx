@@ -1,18 +1,17 @@
-package com.aiden.librarysoftwarefx.utility;
+package com.aiden.librarysoftwarefx.DAL;
 
+import com.aiden.librarysoftwarefx.managers.FileManager;
 import javafx.scene.control.Alert;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginDAL { // Data access layer for user logins
 
     public static boolean usernameExists(String username) {
-        try(BufferedReader br = new BufferedReader(new FileReader(Main.LOGINS_FILE_NAME))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(FileManager.getLoginsFile().getPath()))) {
             String line;
             while((line = br.readLine()) != null && !line.trim().isEmpty()) {
                 if(line.split(",")[0].equalsIgnoreCase(username)) return true;
@@ -22,19 +21,21 @@ public class LoginDAL { // Data access layer for user logins
         }
         return false;
     }
-    private static List<String> getAllLogins() {
+    private static List<String> getAllLogins() throws URISyntaxException {
         List<String> result = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(Main.LOGINS_FILE_NAME))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(FileManager.getLoginsFile().getPath()))) {
+
             String line;
             while((line = br.readLine()) != null && !line.trim().isEmpty()) {
                 result.add(line);
             }
         } catch (Exception e) {
+
             error();
         }
         return result;
     }
-    public static boolean login(String username, String password) {
+    public static boolean login(String username, String password) throws URISyntaxException {
         for(String login : getAllLogins()) {
             if(login.split(",")[0].matches(username)) {
                 if(login.split(",")[1].matches(password)) return true;
@@ -43,7 +44,7 @@ public class LoginDAL { // Data access layer for user logins
         return false;
     }
     private static void saveAllLogins(List<String> list) throws IOException {
-        try(FileWriter writer = new FileWriter(Main.LOGINS_FILE_NAME, false)) {
+        try(FileWriter writer = new FileWriter(FileManager.getLoginsFile().getPath(), false)) {
             for(String login : list) {
                 writer.write(login + "\n");
             }
@@ -51,7 +52,7 @@ public class LoginDAL { // Data access layer for user logins
             error();
         }
     }
-    public static void createNewAccount(String username, String password) throws IOException {
+    public static void createNewAccount(String username, String password) throws IOException, URISyntaxException {
         List<String> logins = getAllLogins();
         logins.add(username + "," + password);
         saveAllLogins(logins);

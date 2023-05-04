@@ -1,10 +1,12 @@
-package com.aiden.librarysoftwarefx.utility;
+package com.aiden.librarysoftwarefx.DAL;
 
+import com.aiden.librarysoftwarefx.managers.DateManager;
+import com.aiden.librarysoftwarefx.managers.FileManager;
+import com.aiden.librarysoftwarefx.utility.User;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
@@ -17,7 +19,7 @@ public class UserDAL { // Data access layer for User objects
     public static List<User> getAllUsers() {
         List<User> result = new ArrayList<>();
 
-        try(BufferedReader br = new BufferedReader(new FileReader(Main.USERS_FILE_NAME))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(FileManager.getUsersFile().getPath()))) {
             String line;
             while((line = br.readLine()) != null && !line.trim().isEmpty()) result.add(new User(line));
         } catch(Exception e) {
@@ -28,14 +30,14 @@ public class UserDAL { // Data access layer for User objects
     public static void saveNewUser(User user) {
         List<User> users = getAllUsers();
         users.add(user);
-        try(FileWriter writer = new FileWriter(Main.USERS_FILE_NAME, false)){
+        try(FileWriter writer = new FileWriter(FileManager.getUsersFile().getPath(), false)){
             for(User u : users) writer.write(u.toCsv() + "\n");
         } catch(Exception e) {
             error();
         }
     }
     public static void saveAllUsers(List<User> userList) {
-        try(FileWriter writer = new FileWriter(Main.USERS_FILE_NAME, false)){
+        try(FileWriter writer = new FileWriter(FileManager.getUsersFile().getPath(), false)){
             for(User user : userList) writer.write(user.toCsv() + "\n");
         } catch(Exception e) {
             error();

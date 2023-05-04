@@ -1,18 +1,19 @@
 package com.aiden.librarysoftwarefx.scenes;
 
+import com.aiden.librarysoftwarefx.DAL.LoginDAL;
+import com.aiden.librarysoftwarefx.managers.SceneManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class CreateAccountScene {
+
+    public static String getName() { return "create_account"; }
 
     public static Scene getScene() {
         Label titleLabel = new Label();
@@ -40,12 +41,12 @@ public class CreateAccountScene {
 
 
         createAccountButton.setOnAction(e -> {
-            String userName = usernameField.getText();
+            String username = usernameField.getText();
             String password = passwordField.getText();
             String confirmPassword = confirmPasswordField.getText();
 
             // Reject parentheses in the username / password
-            if(userName.replaceAll("[^()]", "").length() > 0 || password.replaceAll("[^()]", "").length() > 0) {
+            if(username.replaceAll("[^()]", "").length() > 0 || password.replaceAll("[^()]", "").length() > 0) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("No parentheses allowed in username or password");
                 return;
@@ -57,38 +58,45 @@ public class CreateAccountScene {
                 return;
             }
             // Check if username / password is greater than 25 characters
-            if(userName.length() > 25 || password.length() > 25) {
+            if(username.length() > 25 || password.length() > 25) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username and password must be fewer than 25 characters");
                 return;
             }
             // Check if username / password is fewer than 6 characters
-            if(userName.length() < 6 || password.length() < 6) {
+            if(username.length() < 6 || password.length() < 6) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username and password must be at least 6 characters long");
             }
             // Check if username / password field is empty
-            if(userName.isEmpty() || password.isEmpty()) {
+            if(username.isEmpty() || password.isEmpty()) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username and password field cannot be blank");
             }
-            // TODO check to see if username already exists
-
-            // Otherwise, account can be created.
-
-            // TODO create the account
+            // Check if username already exists
+            if(LoginDAL.usernameExists(username)) {
+                displayMessageLabel.setTextFill(Color.RED);
+                displayMessageLabel.setText("Username already exists");
+            }
+            // All checks passed, create the account
+            try {
+                LoginDAL.createNewAccount(username, password);
+            } catch (Exception ex) {
+                error();
+            }
 
             // Display a green confirmation message.
             displayMessageLabel.setTextFill(Color.GREEN);
-            displayMessageLabel.setText("Success! Account " + userName + " successfully created.");
+            displayMessageLabel.setText("Success! Account " + username + " successfully created.");
 
 
-            // TODO call scene manager and switch to login screen
+            // Account has been created, switch back to login screen
+            SceneManager.switchToScene(LoginScene.getName());
 
         });
 
         goBackButton.setOnAction(e -> {
-            // TODO call scene manager and switch to login screen
+            SceneManager.switchToScene(LoginScene.getName());
         });
 
         // Create the VBox, add and configure everything, and return the Scene object
@@ -100,5 +108,12 @@ public class CreateAccountScene {
                 createAccountButton, goBackButton, displayMessageLabel);
 
         return new Scene(vBox);
+    }
+    private static void error() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Program error");
+        alert.setContentText("Your account could not be created. " +
+                "Please try again. If the problem persists, resart the program.");
+        alert.showAndWait();
     }
 }
