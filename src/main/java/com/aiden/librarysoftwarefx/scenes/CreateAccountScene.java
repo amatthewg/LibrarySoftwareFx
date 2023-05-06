@@ -67,31 +67,36 @@ public class CreateAccountScene {
             if(username.length() < 6 || password.length() < 6) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username and password must be at least 6 characters long");
+                return;
             }
             // Check if username / password field is empty
             if(username.isEmpty() || password.isEmpty()) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username and password field cannot be blank");
+                return;
             }
             // Check if username already exists
             if(LoginDAL.usernameExists(username)) {
                 displayMessageLabel.setTextFill(Color.RED);
                 displayMessageLabel.setText("Username already exists");
+                return;
             }
             // All checks passed, create the account
             try {
                 LoginDAL.createNewAccount(username, password);
             } catch (Exception ex) {
                 error();
+                return;
             }
+
+            // Clear the inputs
+            usernameField.clear();
+            passwordField.clear();
+            confirmPasswordField.clear();
 
             // Display a green confirmation message.
             displayMessageLabel.setTextFill(Color.GREEN);
             displayMessageLabel.setText("Success! Account " + username + " successfully created.");
-
-
-            // Account has been created, switch back to login screen
-            SceneManager.switchToScene(LoginScene.getName());
 
         });
 

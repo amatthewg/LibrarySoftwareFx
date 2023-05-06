@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,10 +62,10 @@ public class UserDAL { // Data access layer for User objects
         }
         return result;
     }
-    public static List<User> getUsersByRegistrationDate(Date date1, Date date2) throws ParseException {
+    public static List<User> getUsersByRegistrationDate(LocalDate date1, LocalDate date2) throws ParseException {
         List<User> result = new ArrayList<>();
         for(User user : getAllUsers()) {
-            Date userDate = DateManager.stringToDate(user.getRegistrationDate());
+            LocalDate userDate = user.getRegistrationDate();
             if(userDate.compareTo(date1) >= 0 &&
             userDate.compareTo(date2) <= 0) {
                 result.add(user);

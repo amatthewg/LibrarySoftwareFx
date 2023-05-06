@@ -1,6 +1,7 @@
 package com.aiden.librarysoftwarefx.utility;
 import com.aiden.librarysoftwarefx.managers.DateManager;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ public class User  {
 
     private static int userIDCount;
 
-    private String registrationDate;
+    private LocalDate registrationDate;
 
     private double balanceDue;
 
@@ -26,7 +27,7 @@ public class User  {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userIDCount++;
-        this.registrationDate = DateManager.dateToString(new Date());
+        this.registrationDate = LocalDate.now();
         this.balanceDue = 0;
         this.listOfAllCharges = new ArrayList<>();
     }
@@ -38,7 +39,7 @@ public class User  {
         this.firstName = fields[1];
         this.middleName = fields[2];
         this.lastName = fields[3];
-        this.registrationDate = fields[4];
+        this.registrationDate = LocalDate.parse(fields[4]);
         this.balanceDue = Double.parseDouble(fields[5]);
         this.email = fields[6];
         this.phoneNumber = fields[7];
@@ -58,7 +59,7 @@ public class User  {
     public void setLastName(String name) { this.lastName = name; }
     public String getLastName() { return this.lastName; }
     public int getUserID() { return this.userID; }
-    public String getRegistrationDate() { return this.registrationDate; }
+    public LocalDate getRegistrationDate() { return this.registrationDate; }
     public double getBalanceDue() { return this.balanceDue; }
     public List<LibraryCharge> getListOfAllCharges() { return this.listOfAllCharges; }
     public void setEmail(String email) { this.email = email; }
@@ -84,7 +85,7 @@ public class User  {
                 this.firstName + "," +
                 this.middleName + "," +
                 this.lastName + "," +
-                this.registrationDate + "," +
+                this.registrationDate.toString() + "," +
                 this.balanceDue + "," +
                 this.email + "," +
                 this.phoneNumber + "," +

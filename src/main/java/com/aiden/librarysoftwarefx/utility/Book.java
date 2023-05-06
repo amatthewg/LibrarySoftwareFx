@@ -1,16 +1,19 @@
 package com.aiden.librarysoftwarefx.utility;
 
+import java.time.LocalDate;
+
 public class Book {
     private String title;
     private String isbn = "NONE";
     private String author = "";
-    private String publishDate = "NONE";
+    private LocalDate publishDate;
     private int quantity = 1;
 
 
-    public Book(String title, String author) {
+    public Book(String title, String author, LocalDate publishDate) {
         this.title = title;
         this.author = author;
+        this.publishDate = publishDate;
 
     }
     public Book(String csvInput) {
@@ -18,7 +21,7 @@ public class Book {
         this.title = fields[0];
         this.isbn = fields[1];
         this.author = fields[2];
-        this.publishDate = fields[3];
+        this.publishDate = LocalDate.parse(fields[3]);
         this.quantity = Integer.parseInt(fields[4]);
     }
     public void setTitle(String title) { this.title = title; }
@@ -27,8 +30,8 @@ public class Book {
     public String getIsbn() { return this.isbn; }
     public void setAuthor(String author) { this.author = author; }
     public String getAuthor() { return this.author; }
-    public void setPublishDate(String publishDate) { this.publishDate = publishDate; }
-    public String getPublishDate() { return this.publishDate; }
+    public void setPublishDate(LocalDate publishDate) { this.publishDate = publishDate; }
+    public LocalDate getPublishDate() { return this.publishDate; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public int getQuantity() { return this.quantity; }
 
@@ -36,7 +39,7 @@ public class Book {
         return this.title + "," +
                 this.isbn + "," +
                 this.author + "," +
-                this.publishDate + "," +
+                this.publishDate.toString() + "," +
                 this.quantity;
     }
 

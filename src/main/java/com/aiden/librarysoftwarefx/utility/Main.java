@@ -2,6 +2,7 @@ package com.aiden.librarysoftwarefx.utility;
 
 import com.aiden.librarysoftwarefx.managers.FileManager;
 import com.aiden.librarysoftwarefx.managers.SceneManager;
+import com.aiden.librarysoftwarefx.scenes.AddBookScene;
 import com.aiden.librarysoftwarefx.scenes.CreateAccountScene;
 import com.aiden.librarysoftwarefx.scenes.LoginScene;
 import javafx.application.Application;
@@ -22,6 +23,7 @@ public class Main extends Application {
         // Create all scene objects, add them to SceneManager
         SceneManager.addScene(LoginScene.getName(), LoginScene.getScene());
         SceneManager.addScene(CreateAccountScene.getName(), CreateAccountScene.getScene());
+        SceneManager.addScene(AddBookScene.getName(), AddBookScene.getScene());
 
         // Create primary stage, configure it, and add it to SceneManager
         Stage primaryStage = new Stage();
